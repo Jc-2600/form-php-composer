@@ -19,9 +19,24 @@ if (isset($_POST["form"])) {
         $subject = $_POST["subjet"];
         $message = $_POST["message"];
 
-        $body = "$name <$email> te envía el siguiente mensaje: <br><br> $message";
+        $subjectUser = "Recibimos tu mensaje";
 
-        sentMail($subject, $body, $email, $name, true);
+        $bodyUser = "¡Hola $name!, Muchas gracias por contactarte con nosotros, en breve te responderemos.";
+        $bodyAdmin = "
+            Hola Admin. Has recibido este nuevo contacto a través de tu página web. <br>
+            <strong>La información de tu cliente es: </strong><br><br>
+
+            <strong>Nombre:</strong> $name <br>
+            <strong>Correo:</strong> $email <br>
+            <strong>Asunto:</strong> $subject <br>
+            <strong>Mensaje:</strong> $message <br>
+
+        
+        ";
+        sentMailUser($subjectUser, $bodyUser, $email, $name, true); //Envío de correo al usuario
+
+        sentMailAdmin("Contacto de tu pagina web",$bodyAdmin,$name,true); //Envío de correo al administrador 
+
 
         $status = "success";
     } else {
